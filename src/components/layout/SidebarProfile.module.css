@@ -1,0 +1,43 @@
+.profile {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel2);
+  padding: 14px;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid var(--border2);
+  background: linear-gradient(180deg, #f3f3f3, #ebebeb);
+  display: grid;
+  place-items: center;
+  font-family: var(--mono2);
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.name {
+  font-weight: 750;
+  font-size: 14px;
+}
+
+.role {
+  color: var(--sub);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.desc {
+  margin: 10px 0 0;
+  color: var(--sub);
+  font-size: 12px;
+  line-height: 1.65;
+}

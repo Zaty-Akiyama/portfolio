@@ -1,0 +1,43 @@
+.block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--panel);
+  padding: 14px;
+}
+
+.title {
+  font-family: var(--mono2);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 10px;
+}
+
+.links {
+  display: grid;
+  gap: 8px;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--panel2);
+}
+
+.link:hover {
+  background: #f1f1f1;
+}
+
+.hint {
+  font-family: var(--mono2);
+  font-size: 11px;
+  color: var(--muted);
+}

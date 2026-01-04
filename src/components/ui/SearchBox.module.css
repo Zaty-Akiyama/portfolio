@@ -1,0 +1,33 @@
+.search {
+  width: 320px;
+  max-width: 50vw;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 12px;
+  padding: 10px 12px;
+  gap: 8px;
+  color: var(--muted);
+}
+
+.hint {
+  font-family: var(--mono2);
+  font-size: 11px;
+}
+
+.search input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: var(--text);
+}
+
+@media (max-width: 980px) {
+  .search {
+    width: 100%;
+    max-width: none;
+  }
+}

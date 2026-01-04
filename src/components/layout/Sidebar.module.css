@@ -1,0 +1,57 @@
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 22px 18px 22px;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.brandName {
+  font-weight: 780;
+  letter-spacing: 0.01em;
+  font-size: 16px;
+}
+
+.badge {
+  font-family: var(--mono2);
+  font-size: 11px;
+  color: var(--sub);
+  border: 1px solid var(--border2);
+  padding: 6px 8px;
+  border-radius: 999px;
+  background: var(--panel2);
+}
+
+.bottom {
+  margin-top: auto;
+  color: var(--muted);
+  font-size: 11px;
+  font-family: var(--mono2);
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+.content {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
