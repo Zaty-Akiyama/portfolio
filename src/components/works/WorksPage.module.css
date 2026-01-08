@@ -3,7 +3,16 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 18px;
+  padding: 26px 26px 18px;
+  position: fixed;
+  top: 0;
+  left: 300px;
+  right: 0;
+  backdrop-filter: blur(10px);
+}
+
+.content {
+  padding-top: 64px;
 }
 
 .title {

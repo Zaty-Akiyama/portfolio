@@ -47,19 +47,18 @@ export function WorksPage() {
           <SearchBox value={q} onChange={setQ} />
         </div>
       </header>
-
-      <WorksSection
-        id="featured"
-        title="代表実績"
-        projects={featured}
-      />
-
-      <WorksSection id="all" title="その他の実績" projects={all} />
-
-      <footer className={styles.footer}>
-        <div>© Yuya Akiyama</div>
-        <div className={styles.footerNote}>最終更新: 2026年01月05日</div>
-      </footer>
+      <div className={styles.content}>
+        <WorksSection
+          id="featured"
+          title="代表実績"
+          projects={featured}
+        />
+        <WorksSection id="all" title="その他の実績" projects={all} />
+        <footer className={styles.footer}>
+          <div>© Yuya Akiyama</div>
+          <div className={styles.footerNote}>最終更新: 2026年01月05日</div>
+        </footer>
+      </div>
     </>
   );
 }
