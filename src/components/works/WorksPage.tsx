@@ -54,7 +54,7 @@ export function WorksPage() {
         projects={featured}
       />
 
-      <WorksSection id="all" title="実績" note="代表実績以外" projects={all} />
+      <WorksSection id="all" title="その他の実績" projects={all} />
 
       <footer className={styles.footer}>
         <div>© Yuya Akiyama</div>

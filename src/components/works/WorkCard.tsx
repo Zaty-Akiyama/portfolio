@@ -19,12 +19,21 @@ export function WorkCard({ project }: { project: Project }) {
         <div className={styles.meta}>
           <span>{project.period}</span>
           <span>／</span>
-          <span>Role: {project.role}</span>
+          <span>{project.role}</span>
         </div>
       </div>
 
       <div className={styles.body}>
-        <p className={styles.desc}>{project.summary}</p>
+        {project.summary ? (
+          <p className={styles.desc}>
+            {project.summary.split(/\r?\n/).map((line, i, arr) => (
+              <span key={i}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
+          </p>
+        ) : null}
 
         {project.stack?.length ? (
           <div className={styles.pills}>
