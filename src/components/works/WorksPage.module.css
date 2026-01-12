@@ -51,10 +51,17 @@
 
 @media (max-width: 980px) {
   .header {
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
+    position: sticky;
+    width: 100vw;
+    gap: 40px;
+    transform: translateX(-16px);
   }
   .right {
     width: 100%;
+    max-width: 320px;
+  }
+  .content {
+    padding-top: 0;
   }
 }

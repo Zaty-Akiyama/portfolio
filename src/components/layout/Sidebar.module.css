@@ -1,4 +1,5 @@
 .sidebar {
+  color: var(--text);
   position: sticky;
   top: 0;
   height: 100vh;
@@ -28,6 +29,7 @@
   font-size: 11px;
   color: var(--sub);
   border: 1px solid var(--border2);
+  text-transform: uppercase;
   padding: 6px 8px;
   border-radius: 999px;
   background: var(--panel2);

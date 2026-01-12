@@ -22,6 +22,13 @@
   font-family: var(--mono2);
   font-size: 11px;
   color: var(--muted);
+  overflow: hidden;
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .name {

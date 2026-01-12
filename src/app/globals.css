@@ -37,3 +37,7 @@ body {
 a {
   color: inherit;
 }
+
+:where(body) {
+  overflow-x: clip;
+}

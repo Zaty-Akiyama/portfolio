@@ -1,18 +1,25 @@
+'use client';
+import { usePathname } from "next/navigation";
 import styles from "./SidebarNav.module.css";
 
-const items = [
-  { href: "#featured", label: "Featured Works" },
-  { href: "#all", label: "All Works" },
-  { href: "#about", label: "About" },
-  { href: "#contact", label: "Contact" },
+export const items = [
+  { href: "/", label: "Works" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export function SidebarNav() {
+  const pathname = usePathname();
+
+  const isCurrent = (href: string) => {
+    return pathname.match(new RegExp(`^${href}(/|$)`)) !== null;
+  };
+
   return (
     <nav className={styles.nav} aria-label="sidebar">
       <div className={styles.title}>Navigate</div>
-      {items.map((it, i) => (
-        <a key={it.href} href={it.href} className={i === 0 ? styles.active : undefined}>
+      {items.map((it) => (
+        <a key={it.href} href={it.href} className={isCurrent(it.href) ? styles.active : undefined}>
           {it.label}
         </a>
       ))}

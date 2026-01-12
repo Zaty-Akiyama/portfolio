@@ -10,8 +10,10 @@ export function WorksPage() {
   const [q, setQ] = useState("");
 
   const filtered = useMemo(() => {
-    const keyword = q.trim().toLowerCase();
-    if (!keyword) return projects;
+    const rowKeyword = q.trim().toLowerCase();
+    if (!rowKeyword) return projects;
+
+    const keywords = rowKeyword.split(/\s+|,+/);
 
     return projects.filter((p) => {
       const hay = [
@@ -25,8 +27,8 @@ export function WorksPage() {
       ]
         .join(" ")
         .toLowerCase();
-
-      return hay.includes(keyword);
+      
+      return keywords.every((kw) => hay.includes(kw));
     });
   }, [q]);
 
@@ -38,9 +40,6 @@ export function WorksPage() {
       <header className={styles.header}>
         <div>
           <h1 className={styles.title}>Works</h1>
-          <p className={styles.sub}>
-            実績を中心に、担当範囲・期間・技術・取り組み内容が一目でわかる構成にしています。
-          </p>
         </div>
 
         <div className={styles.right}>

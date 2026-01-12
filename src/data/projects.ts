@@ -53,13 +53,14 @@ export const projects: Project[] = [
   {
     id: "amorphia",
     title: "PRページ作成・リニューアル（AMORPHIA TOKYO）",
-    category: "WEBサイト制作・リニューアル",
+    category: "リニューアル",
     period: "2022.08 - 2023.01",
     role: "要件定義・設計・開発",
     summary:
       "・プロモーションページの作成\nブランドのコレクションイベントのイメージである砂時計をThree.jsを使って3Dで表現\n・共通部分のデザイン修正\nShopifyデフォルトのテーマデザインのヘッダー/フッターからサイト主要要素を大きく表示するようデザインの修正",
     stack: ["Shopify", "liquid", "Three.js", "WebGL"],
     featured: true,
+    labels: ["WEBサイト制作"],
     links: [
       { label: "ホームページ", href: "https://amorphia.tokyo/" },
       { label: "プロモーションページ", href: "https://amorphia.tokyo/pages/2023-spring-summer" },
@@ -69,11 +70,12 @@ export const projects: Project[] = [
     id: "nexer",
     title: "SEO施策コーディング",
     category: "コーディング",
-    period: "2022.11 - 2023.11",
+    period: "2022.11 - 2023.11 / 2025.11 - 現在",
     role: "コーディング業務",
     summary:
       "SEO対策を目的とした修正依頼のコーディング対応\n\nWordPressやMovableTypeなどのCMSやShopifyやMakeShopなどのECサイトで作成されたWEBサイトへの本番反映",
     stack: ["HTML", "CSS", "各種CMS"],
+    labels: ["NDA"],
     featured: false,
   },
   {
@@ -98,6 +100,7 @@ export const projects: Project[] = [
       "WEB制作・開発を手がけるZATYの公式ブログです。技術的な情報から実績や近況報告などZATYについても詳しく解説します。",
     stack: ["HTML", "Sass", "WordPress"],
     featured: true,
+    labels: ["WEBサイト制作"],
     links: [{ label: "ブログ", href: "https://blog.zaty.jp/" }],
   },
   {
@@ -111,5 +114,18 @@ export const projects: Project[] = [
     stack: ["HTML", "Sass", "JavaScript"],
     featured: true,
     links: [{ label: "Webサイト", href: "https://web-production.zaty.jp/" }],
+  },
+  {
+    id: "white-sesame",
+    title: "ブログ運営（白ごまブログ）",
+    category: "ブログ運営",
+    period: "2019.06 - 現在に至る",
+    role: "要件定義・設計・開発・テスト・運用保守",
+    summary:
+      "主にWeb制作やプログラミング、ガジェットレビューなどを扱う個人ブログです。初心者向けの解説記事や最新技術の紹介など幅広く発信しています。",
+    stack: ["HTML", "Sass", "WordPress"],
+    featured: false,
+    labels: ["WEBサイト制作"],
+    links: [{ label: "ブログ", href: "https://white-sesame.com" }],
   }
 ];

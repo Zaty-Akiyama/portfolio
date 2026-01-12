@@ -14,7 +14,7 @@ export function SearchBox({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         type="text"
-        placeholder="Search (e.g. WordPress, Laravel, Shopify...)"
+        placeholder="Search (e.g. WordPress, 運用保守...)"
       />
     </label>
   );

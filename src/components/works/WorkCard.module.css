@@ -8,12 +8,6 @@
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
-.card:hover {
-  transform: translateY(-2px);
-  border-color: #cfcfcf;
-  background: #ffffff;
-}
-
 .top {
   padding: 14px 14px 10px;
   border-bottom: 1px solid var(--border);
@@ -55,12 +49,14 @@
 .body {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 12px;
   flex: 1;
   padding: 12px 14px 14px;
 }
 
 .desc {
+  flex: 1;
   margin: 0;
   color: var(--sub);
   font-size: 13px;
@@ -72,6 +68,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  
 }
 
 .pill {
