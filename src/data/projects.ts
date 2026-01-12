@@ -36,7 +36,7 @@ export const projects: Project[] = [
       "静的サイトで構築されていた旧WEBサイトから、お知らせコンテンツや年次開催の展覧会情報の更新ができるようWordPressで作成",
     stack: ["HTML", "Sass", "TypeScript", "PHP", "WordPress"],
     featured: true,
-    links: [{ label: "Webサイト", href: "https://shogein.com/" }],
+    links: [{ label: "Webサイト", href: "https://gendaisho.jp/" }],
   },
   {
     id: "ace",
