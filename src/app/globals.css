@@ -1,24 +1,42 @@
 /* src/app/globals.css */
 :root {
-  --bg1: #f7f7f7;
-  --bg2: #f2f2f2;
+  --padding-main: 8px;
+  --padding-main-lg: 10px;
+  --padding-main-sm: 6px;
 
-  --panel: #ffffff;
-  --panel2: #fafafa;
+  --radius-600: 8px;
+  --radius-700: 16px;
 
-  --border: #e6e6e6;
-  --border2: #dcdcdc;
+  --color-main-text: #000;
+  --color-main-bg: #fff;
 
-  --text: #111111;
-  --sub: #555555;
-  --muted: #777777;
+  --color-main-25: #fcfdff;
+  --color-main-50: #f6f9fb;
+  --color-main-100: #ebecf0;
+  --color-main-200: #c8cad2;
+  --color-main-300: #7a7d89;
+  --color-main-400: #4f525e;
+  --color-main-500: #2f3243;
+  --color-main-600: #151c2d;
+  --color-main-700: #0a0820;
+  --color-main-800: #08061d;
+  --color-main-900: #02010c;
 
-  --radius: 16px;
-  --radius2: 12px;
+  --color-primary: #202bff;
+  --color-primary-dark: #161ed6;
+  --color-primary-light: #4c61ff;
+  --color-primary-bg: #e6e9ff;
+
+  --color-accent: #df2d01;
+  --color-accent-dark: #bd3513;
+  --color-accent-light: #ff8e72;
+  --color-accent-bg: #fff0ed;
+
+  --color-border: #e6e6e6;
+  --color-border-dark: #d4d4d4;
+  
 
   --mono: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono2: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
 }
 
 * {
@@ -30,8 +48,8 @@ body {
   margin: 0;
   height: 100%;
   font-family: var(--mono);
-  color: var(--text);
-  background: linear-gradient(180deg, var(--bg1), var(--bg2));
+  color: var(--color-main-text);
+  background: var(--color-main-25);
 }
 
 a {

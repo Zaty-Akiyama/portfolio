@@ -1,7 +1,7 @@
 .profile {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--panel2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-700);
+  background: var(--color-main-50);
   padding: 14px;
 }
 
@@ -15,13 +15,13 @@
   width: 46px;
   height: 46px;
   border-radius: 999px;
-  border: 1px solid var(--border2);
+  border: 1px solid var(--color-border-dark);
   background: linear-gradient(180deg, #f3f3f3, #ebebeb);
   display: grid;
   place-items: center;
-  font-family: var(--mono2);
+  font-family: var(--mono);
   font-size: 11px;
-  color: var(--muted);
+  color: var(--color-main-50);
   overflow: hidden;
 }
 
@@ -37,14 +37,14 @@
 }
 
 .role {
-  color: var(--sub);
+  color: var(--color-main-500);
   font-size: 12px;
   margin-top: 2px;
 }
 
 .desc {
   margin: 10px 0 0;
-  color: var(--sub);
+  color: var(--color-main-500);
   font-size: 12px;
   line-height: 1.65;
 }
