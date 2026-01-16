@@ -7,12 +7,18 @@ export function WorksSection({
   title,
   note,
   projects,
+  keywords,
 }: {
   id: string;
   title: string;
   note?: string;
   projects: Project[];
+  keywords?: string;
 }) {
+  const keywordsArray = keywords
+    ? keywords.trim().toLowerCase().split(/\s+|,+/)
+    : [];
+
   return (
     <section className={styles.section} id={id}>
       <div className={styles.head}>
@@ -22,7 +28,7 @@ export function WorksSection({
 
       <div className={styles.grid}>
         {projects.map((p) => (
-          <WorkCard key={p.id} project={p} />
+          <WorkCard key={p.id} project={p} keywords={keywordsArray} />
         ))}
       </div>
     </section>
