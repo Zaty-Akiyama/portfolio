@@ -7,6 +7,7 @@ import { SearchBox } from "@/components/ui/SearchBox";
 import { WorksSection } from "./WorksSection";
 
 import { normalizeKana } from "@/utils/normalizedText";
+import { Header } from "@/components/layout/Header";
 
 const getStartDateMs = (period: string) => {
   const start = period.split("-")[0]?.trim() ?? "";
@@ -65,7 +66,7 @@ export function WorksPage() {
 
   return (
     <>
-      <header className={styles.header}>
+      <Header isFixed>
         <div>
           <h1 className={styles.title}>Works</h1>
         </div>
@@ -73,7 +74,7 @@ export function WorksPage() {
         <div className={styles.right}>
           <SearchBox value={q} onChange={setQ} />
         </div>
-      </header>
+      </Header>
 
       <div className={styles.content}>
         <p className="sub">

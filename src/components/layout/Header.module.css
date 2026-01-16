@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+
+  &.fixed {
+    padding: 26px 26px 18px;
+    position: fixed;
+    top: 0;
+    left: 300px;
+    right: 0;
+  }
+}
+
+@media (max-width: 980px) {
+  .header {
+    min-height: 39px;
+    align-items: center;
+    gap: 40px;
+
+    &.fixed {
+      margin-top: -18px;
+      padding: 18px 16px 16px;
+      position: sticky;
+      width: 100vw;
+      transform: translateX(-16px);
+    }
+  }
+}

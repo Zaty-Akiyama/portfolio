@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 26px 26px 18px;
+  position: fixed;
+  top: 0;
+  left: 300px;
+  right: 0;
+  backdrop-filter: blur(10px);
+  z-index: 999;
+}
+
+.content {
+  padding-top: 64px;
+}
+
+.title {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.01em;
+}
