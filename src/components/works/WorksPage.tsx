@@ -77,7 +77,7 @@ export function WorksPage() {
 
       <div className={styles.content}>
         <p className="sub">
-          右上の検索フォームからスキルや開発フェーズの絞り込みができます。
+          右上の検索フォームからスキルや開発フェーズの絞り込みができます。スペースやカンマで複数キーワードの検索ができます。
         </p>
 
         <WorksSection id="featured" title="実績" projects={filteredProjects} keywords={q} />
