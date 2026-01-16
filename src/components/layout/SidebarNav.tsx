@@ -1,4 +1,6 @@
-'use client';
+"use client";
+
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./SidebarNav.module.css";
 
@@ -12,16 +14,22 @@ export function SidebarNav() {
   const pathname = usePathname();
 
   const isCurrent = (href: string) => {
-    return pathname.match(new RegExp(`^${href}(/|$)`)) !== null;
+    if (href === "/") return pathname === "/";
+    return pathname === href || pathname.startsWith(`${href}/`);
   };
 
   return (
     <nav className={styles.nav} aria-label="sidebar">
       <div className={styles.title}>Navigate</div>
+
       {items.map((it) => (
-        <a key={it.href} href={it.href} className={isCurrent(it.href) ? styles.active : undefined}>
+        <Link
+          key={it.href}
+          href={it.href}
+          className={`${styles.link} ${isCurrent(it.href) ? styles.active : ""}`}
+        >
           {it.label}
-        </a>
+        </Link>
       ))}
     </nav>
   );
