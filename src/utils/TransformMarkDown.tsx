@@ -38,8 +38,60 @@ const splitLines = (markdown: string) => {
       return;
     }
 
+
+    // リストの処理
+    if (line.match(/^(\s*[-*+]\s+.+|\s*(\d+)\.\s+.+)$/)) {
+      returnLines[index] = line;
+      for (let i = index + 1; i < splitLines.length; i++) {
+        const currentLine = splitLines[i];
+        if (currentLine.match(/^(\s*[-*+]\s+.+|\s*(\d+)\.\s+.+)$/)) {
+          returnLines[index] += `\n${currentLine}`;
+          skipLineNumber = i;
+        } else {
+          break;
+        }
+      }
+      return;
+    }
+
     returnLines.push(line);
   });
+  return returnLines;
+}
+
+const splitListItems = (listContent: string) => {
+  let splitLines = listContent.split("\n");
+  
+  // リストの階層対応するためのインデント記録用
+  let firstListIndent = null as number | null;
+
+  let skipLineNumber = null as number | null;
+  const returnLines = [] as string[];
+
+  splitLines.forEach((line, index) => {
+    if (skipLineNumber !== null && index <= skipLineNumber) {
+      return;
+    }
+
+    if (firstListIndent === null) {
+      const match = line.match(/^(\s*)/);
+      firstListIndent = match ? match[1].length : 0;
+    }
+
+    returnLines[index] = line;
+    for (let i = index + 1; i < splitLines.length; i++) {
+      const currentLine = splitLines[i];
+      if (currentLine.match(
+        new RegExp(`^\\s{${firstListIndent+2},}([-*+]\\s+.+|(\\d+)\\.\\s+.+)$`)
+      )) {
+        returnLines[index] += `\n${currentLine}`;
+        skipLineNumber = i;
+      } else {
+        break;
+      }
+    }
+  });
+
   return returnLines;
 }
 
@@ -82,13 +134,58 @@ const replaceBold = (text: string): (string | JSX.Element) => {
   </>
 }
 
-// 行の前後の不要な空白とエスケープ文字を削除する
+/**
+ * 行の前後の不要な空白とエスケープ文字を削除する
+ * リストの場合はインデントを保持する
+ * 
+ * @param line 
+ */
 const trimLine = (line: string) => {
   return line
     .replace(/\\([\\`*_{}[\]()#+\-.!])/g, "$1")
-    .replace(/^(?!\s*-)\s+/gm, "")
+    .replace(/^(?!\s*([-\*+]|(\d+)\.))\s+/gm, "")
     .replace(/\s+$/, "")
 }
+
+/**
+ * ul, olのHTMLを生成する
+ * @param paramLine
+ * @param indent
+ */
+const transformListHTML = (paramLine: string, indent: number = 0): React.ReactNode => {
+  const isOrdered = Boolean(paramLine.trim().match(/^\d+\./));
+  const ListTag = isOrdered ? "ol" : "ul";
+
+  const lines = splitListItems(paramLine);
+
+  const nextIndent = indent + 2;
+  const nextMatch = new RegExp(
+    `\n(\\s{${nextIndent},}[-*+]\\s+.+|\\s{${nextIndent},}(\\d+)\\.\\s+.+)`
+  );
+
+  const listElements = lines.map((line, index) => {
+    const firstLine = line.split("\n")[0] ?? "";
+    const trimmedFirst = firstLine.trim();
+
+    const content = trimmedFirst.replace(/^([-*+]|(\d+)\.)\s+/, "");
+
+    let subList: React.ReactNode = null;
+
+    if (nextMatch.test(line)) {
+      const subListContent = line.replace(/^[^\n]*\n/, "");
+      subList = transformListHTML(subListContent, nextIndent);
+    }
+
+    return (
+      <li key={index}>
+        {replaceBold(content)}
+        {subList}
+      </li>
+    );
+  });
+
+  return <ListTag>{listElements}</ListTag>;
+};
 
 export function TransformMarkDown(
   { markdown }:
@@ -150,6 +247,12 @@ export function TransformMarkDown(
     if (trimmedLine.match(/^(-{3,}|\*{3,}|_{3,})$/)) {
       flushBufferAsParagraph();
       transformedHTML.push(<hr />);
+      return;
+    }
+
+    if (trimmedLine.match(/^(\s*[-*+]\s+.+|\s*(\d+)\.\s+.+)/)) {
+      flushBufferAsParagraph();
+      transformedHTML.push(transformListHTML(trimmedLine));
       return;
     }
 
