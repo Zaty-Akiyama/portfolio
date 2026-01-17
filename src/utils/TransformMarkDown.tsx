@@ -227,6 +227,23 @@ export function TransformMarkDown(
       return;
     }
 
+    // 引用
+    if (trimmedLine.startsWith(">")) {
+      flushBufferAsParagraph();
+      const quoteContent = trimmedLine
+        .split("\n")
+        .map((l) => l.replace(/^>\s?/, ""))
+        .join("\n");
+      transformedHTML.push(
+        <blockquote>
+          <React.Fragment>
+            {TransformMarkDown({ markdown: quoteContent })}
+          </React.Fragment>
+        </blockquote>
+      );
+      return;
+    }
+
     // 見出し
     const headingMatch = trimmedLine.match(/^(#{1,6})\s+(.*)$/);
     if (headingMatch) {
@@ -250,6 +267,7 @@ export function TransformMarkDown(
       return;
     }
 
+    // リスト
     if (trimmedLine.match(/^(\s*[-*+]\s+.+|\s*(\d+)\.\s+.+)/)) {
       flushBufferAsParagraph();
       transformedHTML.push(transformListHTML(trimmedLine));
