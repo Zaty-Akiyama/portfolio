@@ -95,34 +95,61 @@ const splitListItems = (listContent: string) => {
   return returnLines;
 }
 
-// 文字を太くする
-const replaceBold = (text: string): (string | JSX.Element) => {
-  if (!text.includes("**")) return text;
-
-  const targetBoldRegex = /\*\*(.+?)\*\*/g;
-  const parts: (string | JSX.Element)[] = [];
-
-  let lastIndex = 0;
-  let match: RegExpExecArray | null;
-
-  while ((match = targetBoldRegex.exec(text)) !== null) {
-    const matchStart = match.index;
-    const matchEnd = targetBoldRegex.lastIndex;
-
-    // 太字でない部分を追加
-    if (lastIndex < matchStart) {
-      parts.push(text.slice(lastIndex, matchStart));
-    }
-
-    // 太字部分を追加
-    parts.push(<strong>{match[1]}</strong>);
-
-    lastIndex = matchEnd;
+// インライン要素の置換
+const replaceMap = {
+  "bold": {
+    check: (text: string) => text.includes("**"),
+    regex: /\*\*(.+?)\*\*/g,
+    htmlTag: "strong",
+  },
+  "code": {
+    check: (text: string) => text.match(/`(.+?)`/),
+    regex: /`(.+?)`/g,
+    htmlTag: "code",
+  },
+};
+const replaceInlineElements = (text: string): (string | JSX.Element) => {
+  if  (!Object.values(replaceMap).some(r => r.check(text))) {
+    return text;
   }
 
-  // 最後の太字以降の部分を追加
-  if (lastIndex < text.length) {
-    parts.push(text.slice(lastIndex));
+  const parts: (string | JSX.Element)[] = [];
+
+  let cursor = 0;
+
+  const combinedRegex = new RegExp(
+    Object.values(replaceMap)
+      .map(r => r.regex.source)
+      .join("|"),
+    "g"
+  );
+
+  let match: RegExpExecArray | null;
+  while ((match = combinedRegex.exec(text)) !== null) {
+    const matchStart = match.index;
+    const matchEnd = combinedRegex.lastIndex;
+
+    // 置換対象でない部分を追加
+    if (cursor < matchStart) {
+      parts.push(text.slice(cursor, matchStart));
+    }
+
+    // 置換対象部分を追加
+    for (let i = 1; i < match.length; i++) {
+      if (match[i]) {
+        const replaceEntry = Object.values(replaceMap)[i - 1];
+        const Tag = replaceEntry.htmlTag as keyof JSX.IntrinsicElements;
+        parts.push(<Tag>{match[i]}</Tag>);
+        break;
+      }
+    }
+
+    cursor = matchEnd;
+  }
+
+  // 最後の置換以降の部分を追加
+  if (cursor < text.length) {
+    parts.push(text.slice(cursor));
   }
 
   return <>
@@ -132,7 +159,7 @@ const replaceBold = (text: string): (string | JSX.Element) => {
       </React.Fragment>
     ))}
   </>
-}
+};
 
 /**
  * 行の前後の不要な空白とエスケープ文字を削除する
@@ -178,7 +205,7 @@ const transformListHTML = (paramLine: string, indent: number = 0): React.ReactNo
 
     return (
       <li key={index}>
-        {replaceBold(content)}
+        {replaceInlineElements(content)}
         {subList}
       </li>
     );
@@ -249,7 +276,7 @@ export function TransformMarkDown(
     if (headingMatch) {
       flushBufferAsParagraph();
       const level = headingMatch[1].length;
-      const content = replaceBold(headingMatch[2]);
+      const content = replaceInlineElements(headingMatch[2]);
       transformedHTML.push(React.createElement(`h${level}`, {}, content));
       return;
     }
@@ -274,7 +301,7 @@ export function TransformMarkDown(
       return;
     }
 
-    buffer.push(replaceBold(trimmedLine));
+    buffer.push(replaceInlineElements(trimmedLine));
   });
 
   flushBufferAsParagraph();
