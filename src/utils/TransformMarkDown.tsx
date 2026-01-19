@@ -134,7 +134,7 @@ const rules: Rule[] = [
   },
   {
     name: "nextLink",
-    regex: /^\[([^\]]+?)\]\((\/[^\s)]+)\)$/,
+    regex: /^\[([^\]]+?)\]\((\/[^\s)]*)\)$/,
     render: (m) => <Link href={m[2]}>{m[1]}</Link>,
   },
 ];
