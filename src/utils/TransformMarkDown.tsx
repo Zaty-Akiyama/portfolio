@@ -1,4 +1,5 @@
-import React, {JSX} from "react";
+import React from "react";
+import Link from "next/link";
 
 // markdownの各行を切り分ける
 const splitLines = (markdown: string) => {
@@ -95,70 +96,107 @@ const splitListItems = (listContent: string) => {
   return returnLines;
 }
 
-// インライン要素の置換
-const replaceMap = {
-  "bold": {
-    check: (text: string) => text.includes("**"),
-    regex: /\*\*(.+?)\*\*/g,
-    htmlTag: "strong",
-  },
-  "code": {
-    check: (text: string) => text.match(/`(.+?)`/),
-    regex: /`(.+?)`/g,
-    htmlTag: "code",
-  },
+type Rule = {
+  name: string;
+  regex: RegExp;
+  render: (m: RegExpExecArray) => React.ReactNode;
 };
-const replaceInlineElements = (text: string): (string | JSX.Element) => {
-  if  (!Object.values(replaceMap).some(r => r.check(text))) {
-    return text;
-  }
 
-  const parts: (string | JSX.Element)[] = [];
+const rules: Rule[] = [
+  {
+    name: "bold",
+    regex: /^\*\*(.+?)\*\*$/,
+    render: (m) => <strong>{m[1]}</strong>,
+  },
+  {
+    name: "code",
+    regex: /^`(.+?)`$/,
+    render: (m) => <code>{m[1]}</code>,
+  },
+  {
+    name: "italic",
+    regex: /^_(.+?)_$/,
+    render: (m) => <em>{m[1]}</em>,
+  },
+  {
+    name: "underline",
+    regex: /^~~(.+?)~~$/,
+    render: (m) => <u>{m[1]}</u>,
+  },
+  {
+    name: "link",
+    regex: /^\[([^\]]+?)\]\((https?:\/\/[^\s)]+)\)$/,
+    render: (m) => (
+      <a href={m[2]} target="_blank" rel="noreferrer">
+        {m[1]}
+      </a>
+    ),
+  },
+  {
+    name: "nextLink",
+    regex: /^\[([^\]]+?)\]\((\/[^\s)]+)\)$/,
+    render: (m) => <Link href={m[2]}>{m[1]}</Link>,
+  },
+];
 
+const combined = new RegExp(
+  rules.map((r) => `(?<${r.name}>${r.regex.source.slice(1, -1)})`).join("|"),
+  "g"
+);
+
+export const replaceInlineElements = (text: string): React.ReactNode => {
+  const parts: React.ReactNode[] = [];
   let cursor = 0;
 
-  const combinedRegex = new RegExp(
-    Object.values(replaceMap)
-      .map(r => r.regex.source)
-      .join("|"),
-    "g"
-  );
-
   let match: RegExpExecArray | null;
-  while ((match = combinedRegex.exec(text)) !== null) {
-    const matchStart = match.index;
-    const matchEnd = combinedRegex.lastIndex;
+  while ((match = combined.exec(text)) !== null) {
+    const start = match.index;
+    const end = combined.lastIndex;
 
-    // 置換対象でない部分を追加
-    if (cursor < matchStart) {
-      parts.push(text.slice(cursor, matchStart));
+    if (cursor < start) {
+      parts.push(text.slice(cursor, start));
     }
 
-    // 置換対象部分を追加
-    for (let i = 1; i < match.length; i++) {
-      if (match[i]) {
-        const replaceEntry = Object.values(replaceMap)[i - 1];
-        const Tag = replaceEntry.htmlTag as keyof JSX.IntrinsicElements;
-        parts.push(<Tag>{match[i]}</Tag>);
-        break;
-      }
+    const full = text.slice(start, end);
+
+    const groups = (match as any).groups as Record<string, string> | undefined;
+    const hitName = groups ? Object.keys(groups).find((k) => groups[k] !== undefined) : undefined;
+
+    if (!hitName) {
+      parts.push(full);
+      cursor = end;
+      continue;
     }
 
-    cursor = matchEnd;
+    const rule = rules.find((r) => r.name === hitName);
+    if (!rule) {
+      parts.push(full);
+      cursor = end;
+      continue;
+    }
+
+    const m = rule.regex.exec(full);
+    if (!m) {
+      parts.push(full);
+      cursor = end;
+      continue;
+    }
+
+    parts.push(rule.render(m));
+    cursor = end;
   }
 
-  // 最後の置換以降の部分を追加
   if (cursor < text.length) {
     parts.push(text.slice(cursor));
   }
 
-  return <>
-    {parts.map((part, index) => (
-      <React.Fragment key={index}>
-        {part}
-      </React.Fragment>
-    ))}
-  </>
+  return (
+    <>
+      {parts.map((p, i) => (
+        <React.Fragment key={i}>{p}</React.Fragment>
+      ))}
+    </>
+  );
 };
 
 /**
@@ -214,6 +252,11 @@ const transformListHTML = (paramLine: string, indent: number = 0): React.ReactNo
   return <ListTag>{listElements}</ListTag>;
 };
 
+/**
+ * マークダウンをReactノードに変換する
+ * @param markdown 
+ * @returns React.ReactNode[]
+ */
 export function TransformMarkDown(
   { markdown }:
   { markdown: string }
@@ -221,7 +264,7 @@ export function TransformMarkDown(
   const transformedHTML = [] as React.ReactNode[];
   const lines = splitLines(markdown);
 
-  let buffer = [] as (string | JSX.Element)[];
+  let buffer = [] as (string | React.ReactNode)[];
 
   const flushBufferAsParagraph = () => {
     if (buffer.length > 0) {
