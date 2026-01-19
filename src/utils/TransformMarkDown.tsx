@@ -253,13 +253,28 @@ const transformListHTML = (paramLine: string, indent: number = 0): React.ReactNo
 };
 
 /**
+ * Reactコンポーネント用マークダウン変換
+ */
+const parseComponentBlock = (line: string) => {
+  const m = line.match(/^:::\s*Component\s+([A-Za-z]\w*)(.*?):::\s*$/);
+  if (!m) return null;
+
+  const name = m[1];
+
+  return { name };
+};
+type ComponentMap = Record<string, React.ComponentType<Record<string, any>>>;
+
+
+/**
  * マークダウンをReactノードに変換する
  * @param markdown 
+ * 
  * @returns React.ReactNode[]
  */
 export function TransformMarkDown(
-  { markdown }:
-  { markdown: string }
+  { markdown, components = {} }:
+  { markdown: string, components?: ComponentMap }
 ) {
   const transformedHTML = [] as React.ReactNode[];
   const lines = splitLines(markdown);
@@ -284,6 +299,23 @@ export function TransformMarkDown(
 
   lines.forEach((line) => {
     let trimmedLine = trimLine(line);
+
+    // コンポーネントブロック
+    const comp = parseComponentBlock(trimmedLine);
+    if (comp) {
+      flushBufferAsParagraph();
+
+      const Comp = components[comp.name];
+      if (!Comp) {
+        transformedHTML.push(
+          <p>{`[不明なコンポーネント: ${comp.name}]`}</p>
+        );
+        return;
+      }
+
+      transformedHTML.push(<Comp />);
+      return;
+    }
 
     // コードブロック
     if (trimmedLine.startsWith("```") && trimmedLine.endsWith("```")) {
