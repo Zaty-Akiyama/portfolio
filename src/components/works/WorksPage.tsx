@@ -9,7 +9,7 @@ import { WorksSection } from "./WorksSection";
 import { normalizeKana } from "@/utils/normalizedText";
 import { Header } from "@/components/layout/Header";
 
-const getStartDateMs = (period: string) => {
+export const getStartDateMs = (period: string) => {
   const start = period.split("-")[0]?.trim() ?? "";
   return new Date(start.replace(/\./g, "/")).getTime();
 };
@@ -77,7 +77,7 @@ export function WorksPage() {
       </Header>
 
       <div className={styles.content}>
-        <p className="sub">
+        <p className={styles.sub}>
           右上の検索フォームからスキルや開発フェーズの絞り込みができます。スペースやカンマで複数キーワードの検索ができます。
         </p>
 

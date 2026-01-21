@@ -13,11 +13,31 @@
 }
 
 .content {
-  padding-top: 64px;
+  padding-top: 32px;
 }
 
 .title {
   margin: 0;
   font-size: 22px;
   letter-spacing: 0.01em;
+}
+
+.recentWorksList {
+  display: block grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+
+  > :last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 1300px) {
+  .recentWorksList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    > :last-child {
+      display: block;
+    }
+  }
 }
