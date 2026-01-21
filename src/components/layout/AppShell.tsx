@@ -5,7 +5,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.app}>
       <Sidebar />
-      <main className={styles.main}>{children}</main>
+      <main className={styles.main}>
+        {children}
+        <footer className={styles.footer}>
+          <div>© Yuya Akiyama</div>
+          <div className={styles.footerNote}>最終更新: 2026年01月05日</div>
+        </footer>
+      </main>
     </div>
   );
 }

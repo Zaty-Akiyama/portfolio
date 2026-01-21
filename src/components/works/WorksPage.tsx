@@ -82,11 +82,6 @@ export function WorksPage() {
         </p>
 
         <WorksSection id="featured" title="実績" projects={filteredProjects} keywords={q} />
-
-        <footer className={styles.footer}>
-          <div>© Yuya Akiyama</div>
-          <div className={styles.footerNote}>最終更新: 2026年01月05日</div>
-        </footer>
       </div>
     </>
   );
