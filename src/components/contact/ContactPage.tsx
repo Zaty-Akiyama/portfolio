@@ -15,6 +15,7 @@ export function ContactPage() {
     email: "",
     inquiry: "",
   });
+  const [completeText, setCompleteText] = useState<string|null>(null);
 
   const [errorText, setErrorText] = useState<Partial<Record<InputKey, string>>|null>(null);
 
@@ -53,70 +54,82 @@ export function ContactPage() {
     setPreview(true);
   };
 
+  const sendInquiry = () => {
+    setCompleteText("送信が完了しました。ありがとうございました。");
+  };
+
   return <>
     <Header>
       <h1 className={styles.title}>お問い合わせ</h1>
     </Header>
     <div className={styles.content}>
-      <p className={styles.description}>お仕事のご依頼やご相談など、お気軽にお問い合わせください。</p>
-      <div className={styles.contactInfo}>
-        <div className={styles.contactItem}>
-          <TextInput
-            label="お名前"
-            type="text"
-            placeholder="秋山 雄哉"
-            value={formData.name}
-            onChange={handleInputChange.bind(null, "name")}
-            preview={preview}
-            alert={errorText?.name}
-          />
-        </div>
-        <div className={styles.contactItem}>
-          <TextInput
-            label="メールアドレス"
-            type="email"
-            placeholder="akiyama@example.com"
-            value={formData.email}
-            onChange={handleInputChange.bind(null, "email")}
-            preview={preview}
-            alert={errorText?.email}
-          />
-        </div>
-        <div className={styles.contactItem}>
-          <TextInput
-            label="お問い合わせ内容"
-            type="textarea"
-            value={formData.inquiry}
-            onChange={handleInputChange.bind(null, "inquiry")}
-            preview={preview}
-            alert={errorText?.inquiry}
-          />
-        </div>
-        <div className={styles.submitArea}>
-          {
-            preview
-              ? <>
-                <SimpleButton
-                  type="light"
-                  onClick={() => setPreview(false)}
-                >
-                  戻る
-                </SimpleButton>
-                <SimpleButton
-                  type="primary"
-                  onClick={() => alert('送信しました！')}
-                >
-                  送信する
-                </SimpleButton>
-              </>
-              : <SimpleButton
-                  onClick={checkValidation}
-                >
-                  確認画面へ
-                </SimpleButton>
-          }
-        </div>
-      </div>
+      {
+        completeText ? (
+          <div className={styles.description}>{completeText}</div>
+        ) : (
+          <>
+            <p className={styles.description}>お仕事のご依頼やご相談など、お気軽にお問い合わせください。</p>
+            <div className={styles.contactInfo}>
+              <div className={styles.contactItem}>
+                <TextInput
+                  label="お名前"
+                  type="text"
+                  placeholder="秋山 雄哉"
+                  value={formData.name}
+                  onChange={handleInputChange.bind(null, "name")}
+                  preview={preview}
+                  alert={errorText?.name}
+                />
+              </div>
+              <div className={styles.contactItem}>
+                <TextInput
+                  label="メールアドレス"
+                  type="email"
+                  placeholder="akiyama@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange.bind(null, "email")}
+                  preview={preview}
+                  alert={errorText?.email}
+                />
+              </div>
+              <div className={styles.contactItem}>
+                <TextInput
+                  label="お問い合わせ内容"
+                  type="textarea"
+                  value={formData.inquiry}
+                  onChange={handleInputChange.bind(null, "inquiry")}
+                  preview={preview}
+                  alert={errorText?.inquiry}
+                />
+              </div>
+              <div className={styles.submitArea}>
+                {
+                  preview
+                    ? <>
+                      <SimpleButton
+                        type="light"
+                        onClick={() => setPreview(false)}
+                      >
+                        戻る
+                      </SimpleButton>
+                      <SimpleButton
+                        type="primary"
+                        onClick={sendInquiry}
+                      >
+                        送信する
+                      </SimpleButton>
+                    </>
+                    : <SimpleButton
+                        onClick={checkValidation}
+                      >
+                        確認画面へ
+                      </SimpleButton>
+                }
+              </div>
+            </div>
+          </>
+        )
+      }
     </div>
   </>
 }
