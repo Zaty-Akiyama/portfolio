@@ -5,10 +5,15 @@
 }
 
 .main {
+  display: flex;
+  flex: 1;
   padding: 26px 26px 8px;
   position: relative;
 }
 
+.content {
+  flex: 1;
+}
 
 .footer {
   margin-top: 22px;
