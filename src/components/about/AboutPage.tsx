@@ -2,22 +2,12 @@
 import { Header } from "@/components/layout/Header";
 import styles from "./AboutPage.module.css";
 import { MdContent } from "@/components/layout/MdContent";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { WorkCard } from "@/components/works/WorkCard";
 import { projects } from "@/data/projects";
 import { getStartDateMs } from "@/components/works/WorksPage";
 
-
-export function AboutPage() {
-  const [markdown, setMarkdown] = useState<string>("");
-  
-  useEffect(() => {
-    fetch('/pages/about.md').then(res => res.text()).then(text => {
-      setMarkdown(text);
-    });
-  }, []);
-
-  
+export function AboutPage({ markdown }: { markdown: string }) {
   const components = useMemo(() => ({
     RecentWorksList: () =>
       <div className={styles.recentWorksList}>
