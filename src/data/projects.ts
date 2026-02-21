@@ -126,6 +126,6 @@ export const projects: Project[] = [
     stack: ["HTML", "Sass", "WordPress"],
     featured: false,
     labels: ["WEBサイト制作"],
-    links: [{ label: "ブログ", href: "https://white-sesame.com" }],
+    links: [{ label: "ブログ", href: "https://white-sesame.jp" }],
   }
 ];
