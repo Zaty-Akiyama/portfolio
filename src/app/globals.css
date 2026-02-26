@@ -60,3 +60,9 @@ a {
 :where(body) {
   overflow-x: clip;
 }
+
+@media (max-width: 980px) {
+  body {
+    margin-top: var(--sp-header-height);
+  }
+}
