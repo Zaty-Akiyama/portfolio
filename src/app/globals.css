@@ -60,3 +60,13 @@ a {
 :where(body) {
   overflow-x: clip;
 }
+
+a,
+button {
+  cursor: pointer;
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+  }
+}
