@@ -19,10 +19,12 @@
     min-height: 39px;
     align-items: center;
     gap: 40px;
+    transition: 0.2s top;
 
     &.fixed {
       margin-top: -18px;
-      padding: 18px 16px 16px;
+      top: calc(var(--sp-header-height) * (var(--sp-header-visible)));
+      padding: 8px 16px;
       position: sticky;
       width: 100vw;
       transform: translateX(-16px);
