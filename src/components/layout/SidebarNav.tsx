@@ -26,7 +26,7 @@ export function SidebarNav() {
         <Link
           key={it.href}
           href={it.href}
-          className={`${styles.link} ${isCurrent(it.href) ? styles.active : ""}`}
+          className={isCurrent(it.href) ? styles.active : ""}
         >
           {it.label}
         </Link>
