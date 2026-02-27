@@ -61,6 +61,16 @@ a {
   overflow-x: clip;
 }
 
+a,
+button {
+  cursor: pointer;
+
+  &:focus,
+  &:focus-visible {
+    outline: 2px solid var(--color-primary);
+  }
+}
+
 @media (max-width: 980px) {
   body {
     margin-top: var(--sp-header-height);

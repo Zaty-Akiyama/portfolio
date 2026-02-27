@@ -11,6 +11,7 @@ export function SearchBox({
     <label className={styles.search} aria-label="search">
       <span className={styles.hint}>⌘K</span>
       <input
+        className={styles.input}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         type="text"

@@ -36,10 +36,7 @@
   }
   .main {
     width: 100vw;
+    margin-top: 56px;
     padding: 18px 16px 48px;
-
-    &.isHeaderVisible {
-      margin-top: 56px;
-    }
   }
 }
