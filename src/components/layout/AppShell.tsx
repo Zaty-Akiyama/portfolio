@@ -29,7 +29,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.app} style={{ "--sp-header-height": "56px", "--sp-header-visible": isHeaderVisible ? "1" : "0" } as React.CSSProperties}>
       <Sidebar />
-      <main className={cn(styles.main, isHeaderVisible && styles.isHeaderVisible)}>
+      <main className={styles.main}>
         <div className={styles.content}>
           {children}
         </div>
