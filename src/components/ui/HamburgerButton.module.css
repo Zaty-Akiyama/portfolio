@@ -36,7 +36,7 @@
   translate: -50%;
   background-color: var(--color-main-300);
   width: 66%;
-  height: 1%;
+  height: max(1%, 1px);
   transform-origin: center;
   transition: top 0.2s 0.1s, rotate 0.2s, opacity 0.2s 0.1s;
 
